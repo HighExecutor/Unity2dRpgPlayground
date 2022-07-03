@@ -1751,7 +1751,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 354519492}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.677, y: 0.066, z: -10}
+  m_LocalPosition: {x: -2.32, y: 0.17, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2317,7 +2317,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.677, y: 0.066, z: -10}
+  m_LocalPosition: {x: -2.32, y: 0.17, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24352,6 +24352,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4900106169062521308, guid: 0fd441ac17c63a9418516e70fbaab5a0, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: Keyboard&Mouse
+      objectReference: {fileID: 0}
     - target: {fileID: 6242324796018872008, guid: 0fd441ac17c63a9418516e70fbaab5a0, type: 3}
       propertyPath: m_Size.x
       value: 0.08877986
@@ -24390,11 +24394,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8493418611410097375, guid: 0fd441ac17c63a9418516e70fbaab5a0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.677
+      value: -2.32
       objectReference: {fileID: 0}
     - target: {fileID: 8493418611410097375, guid: 0fd441ac17c63a9418516e70fbaab5a0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.066
+      value: 0.17
       objectReference: {fileID: 0}
     - target: {fileID: 8493418611410097375, guid: 0fd441ac17c63a9418516e70fbaab5a0, type: 3}
       propertyPath: m_LocalPosition.z

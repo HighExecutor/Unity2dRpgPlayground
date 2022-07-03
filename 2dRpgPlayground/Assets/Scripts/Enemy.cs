@@ -45,6 +45,8 @@ public class Enemy : MonoBehaviour
    
     public void Defeated(PlayerController killer)
     {
+        Collider2D collider = GetComponent<CapsuleCollider2D>();
+        collider.enabled = false;
         killer.GetExp(xp);
         animator.SetTrigger("Defeated");
     }

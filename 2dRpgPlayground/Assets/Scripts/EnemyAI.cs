@@ -120,7 +120,6 @@ public class EnemyAI : MonoBehaviour
     void StopAttack()
     {
         UnlockMovement();
-        enemyAttack.StopAttack();
     }
     
     public void LockMovement()

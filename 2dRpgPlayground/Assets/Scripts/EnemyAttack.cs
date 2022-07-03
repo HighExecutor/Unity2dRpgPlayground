@@ -7,13 +7,13 @@ public class EnemyAttack : MonoBehaviour
 
     public int damage = 1;
     private Vector2 rightAttackOffset;
-    private Collider2D attackCollider;
+    public float xRange = 0.30f;
+    public float yRange = 0.25f;
     
     // Start is called before the first frame update
     void Start()
     {
         rightAttackOffset = transform.localPosition;
-        attackCollider = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -24,7 +24,6 @@ public class EnemyAttack : MonoBehaviour
 
     public void Attack(bool right)
     {
-        attackCollider.enabled = true;
         if (right)
         {
             transform.localPosition = rightAttackOffset;
@@ -33,23 +32,25 @@ public class EnemyAttack : MonoBehaviour
         {
             transform.localPosition = new Vector3(rightAttackOffset.x * -1, rightAttackOffset.y);
         }
-    }
-
-    public void StopAttack()
-    {
-        attackCollider.enabled = false;
-    }
-    
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
+        
+        Collider2D[] collisions = Physics2D.OverlapBoxAll(transform.position,
+            new Vector2(xRange, yRange), 0,
+            LayerMask.GetMask("Creatures"));
+        Debug.Log("Damaged enemies: " + collisions.Length);
+        foreach (var c in collisions)
         {
-            PlayerController player = other.GetComponent<PlayerController>();
-            if (player != null)
+            if (c.CompareTag("Player"))
             {
+                PlayerController player = c.GetComponent<PlayerController>();
                 player.TakeDamage(damage);
             }
         }
+    }
+    
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position, new Vector3(xRange, yRange, 1));
     }
 
 }

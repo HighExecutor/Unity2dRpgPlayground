@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -106,6 +107,17 @@ public class PlayerController : MonoBehaviour
     void OnFire()
     {
         animator.SetTrigger("SwordAttack");
+        Debug.Log("OnFire");
+    }
+
+    void OnFire2()
+    {
+        Debug.Log("OnFire2");
+    }
+
+    void OnInteract()
+    {
+        Debug.Log("OnInterract");
     }
 
     public void SwordAttack()
@@ -113,11 +125,11 @@ public class PlayerController : MonoBehaviour
         LockMovement();
         if (spriteRenderer.flipX)
         {
-            swordAttack.AttackLeft();
+            swordAttack.Attack(false);
         }
         else
         {
-            swordAttack.AttackRight();
+            swordAttack.Attack(true);
         }
     }
     
@@ -129,7 +141,6 @@ public class PlayerController : MonoBehaviour
     public void EndSwordAttack()
     {
         UnlockMovement();
-        swordAttack.StopAttack();
     }
     
     public void UnlockMovement()
