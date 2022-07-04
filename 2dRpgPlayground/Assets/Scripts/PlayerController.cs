@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public HealthBar healthBar;
     public XPBar expBar;
     public GoldBar goldBar;
+    public GameObject fireballPrefab;
 
 
     // Start is called before the first frame update
@@ -112,7 +113,11 @@ public class PlayerController : MonoBehaviour
 
     void OnFire2()
     {
+        GameObject fb = Instantiate(fireballPrefab, transform.position, Quaternion.identity);
+        Fireball fireball = fb.GetComponent<Fireball>();
+        fireball.Init(Camera.main.ScreenToViewportPoint(Mouse.current.position.ReadValue()), this);
         Debug.Log("OnFire2");
+        
     }
 
     void OnInteract()

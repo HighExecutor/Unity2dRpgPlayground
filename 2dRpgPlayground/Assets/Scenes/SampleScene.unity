@@ -1734,7 +1734,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7787995, y: 1}
+    m_SensorSize: {x: 1.7758356, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -19468,7 +19468,7 @@ GameObject:
   - component: {fileID: 1137994716}
   m_Layer: 6
   m_Name: CollisionObjects
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24344,6 +24344,10 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1708628974}
+    - target: {fileID: 1768608570294433090, guid: 0fd441ac17c63a9418516e70fbaab5a0, type: 3}
+      propertyPath: fireballPrefab
+      value: 
+      objectReference: {fileID: 8152941016041367534, guid: e69c92bfef842cd488b72942f2b69dcb, type: 3}
     - target: {fileID: 1768608570294433090, guid: 0fd441ac17c63a9418516e70fbaab5a0, type: 3}
       propertyPath: collisoinOffset
       value: 0.02
