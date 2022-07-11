@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,6 +25,9 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private bool canMove = true;
+    private bool fireAvailable = true;
+    private float fireCooldownCur = 0.0f;
+    public float fireCooldown = 5.0f;
     public HealthBar healthBar;
     public XPBar expBar;
     public GoldBar goldBar;
@@ -45,6 +49,18 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!fireAvailable)
+        {
+            if (fireCooldownCur <= 0.0)
+            {
+                fireCooldownCur = 0.0f;
+                fireAvailable = true;
+            }
+            else
+            {
+                fireCooldownCur -= Time.fixedDeltaTime;
+            }
+        }
         if (canMove)
         {
             if (movementInput != Vector2.zero)
@@ -113,11 +129,18 @@ public class PlayerController : MonoBehaviour
 
     void OnFire2()
     {
-        GameObject fb = Instantiate(fireballPrefab, transform.position, Quaternion.identity);
-        Fireball fireball = fb.GetComponent<Fireball>();
-        fireball.Init(Camera.main.ScreenToViewportPoint(Mouse.current.position.ReadValue()), this);
-        Debug.Log("OnFire2");
-        
+        if (fireAvailable)
+        {
+            GameObject fb = Instantiate(fireballPrefab, transform.position, Quaternion.identity);
+            Fireball fireball = fb.GetComponent<Fireball>();
+            Vector3 mousePos = Mouse.current.position.ReadValue();
+            mousePos.z = Camera.main.nearClipPlane;
+            Vector3 worldpos = Camera.main.ScreenToWorldPoint(mousePos);
+            fireball.Init(worldpos, this);
+            fireAvailable = false;
+            fireCooldownCur = fireCooldown;
+        }
+
     }
 
     void OnInteract()
@@ -206,4 +229,5 @@ public class PlayerController : MonoBehaviour
         gold += g;
         goldBar.SetGold(gold);
     }
+
 }

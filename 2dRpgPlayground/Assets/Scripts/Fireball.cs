@@ -10,45 +10,42 @@ public class Fireball : MonoBehaviour
     public float range = 2f;
     public PlayerController player = null;
     public string target = "Enemy";
-    public Vector2 direction = Vector2.zero;
-    private float angle = 0;
-    private Rigidbody2D rb;
+    public Vector3 direction = Vector3.zero;
     private Animator animation;
     private CircleCollider2D collider;
     private int ticks;
+    private Rigidbody2D rb;
     
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         animation = GetComponent<Animator>();
         collider = GetComponent<CircleCollider2D>();
+        rb = GetComponent<Rigidbody2D>();
         ticks = (int)Mathf.Floor(range / velocity);
     }
 
-    public void Init(Vector2 path, PlayerController link)
+    public void Init(Vector3 path, PlayerController link)
     {
-        direction = path;
+        direction = (path - transform.position).normalized;
         player = link;
-        angle = Vector2.Angle(direction-(Vector2)transform.position, transform.forward-transform.position);
-        Debug.Log("Mouseposition = " + path);
-        Debug.Log("Position = " + transform.position);
-        Debug.Log("Angle = " + angle);
-        rb.MoveRotation(angle);
+        transform.eulerAngles = new Vector3(0, 0 ,GetAngleFromVectorFloat(direction));
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (ticks == 0)
+        if (collider.enabled)
         {
-            Explosion();
-        }
-        else
-        {
-            ticks--;
-            Vector2 path = ((Vector2)direction - rb.position).normalized;
-            rb.MovePosition(rb.position + path * velocity * Time.deltaTime);
+            if (ticks == 0)
+            {
+                Explosion();
+            }
+            else
+            {
+                ticks--;
+                rb.MovePosition(rb.position + (Vector2)direction * velocity * Time.deltaTime);
+            }
         }
     }
 
@@ -74,5 +71,17 @@ public class Fireball : MonoBehaviour
         {
             Explosion();
         }
+    }
+
+    private static float GetAngleFromVectorFloat(Vector3 dir)
+    {
+        dir = dir.normalized;
+        float n = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if (n < 0)
+        {
+            n += 360;
+        }
+
+        return n;
     }
 }
