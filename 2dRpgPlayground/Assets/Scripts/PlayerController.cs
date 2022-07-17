@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     public XPBar expBar;
     public GoldBar goldBar;
     public GameObject fireballPrefab;
+    private bool interaction = false;
+    private MerchantInteraction lastMerchant = null;
 
 
     // Start is called before the first frame update
@@ -145,7 +147,11 @@ public class PlayerController : MonoBehaviour
 
     void OnInteract()
     {
-        Debug.Log("OnInterract");
+        Debug.Log("OnInteract");
+        if (lastMerchant != null)
+        {
+            lastMerchant.OpenDialogue();
+        }
     }
 
     public void SwordAttack()
@@ -229,5 +235,20 @@ public class PlayerController : MonoBehaviour
         gold += g;
         goldBar.SetGold(gold);
     }
+
+    public void SetInteraction(bool value, MerchantInteraction merchant)
+    {
+        interaction = value;
+        if (value)
+        {
+            lastMerchant = merchant;
+        }
+        else
+        {
+            lastMerchant = null;
+        }
+    }
+
+    
 
 }

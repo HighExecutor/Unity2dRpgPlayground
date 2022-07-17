@@ -11,16 +11,16 @@ public class Fireball : MonoBehaviour
     public PlayerController player = null;
     public string target = "Enemy";
     public Vector3 direction = Vector3.zero;
-    private Animator animation;
-    private CircleCollider2D collider;
+    private Animator animator;
+    private CircleCollider2D coll;
     private int ticks;
     private Rigidbody2D rb;
     
     // Start is called before the first frame update
     void Start()
     {
-        animation = GetComponent<Animator>();
-        collider = GetComponent<CircleCollider2D>();
+        animator = GetComponent<Animator>();
+        coll = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         ticks = (int)Mathf.Floor(range / velocity);
     }
@@ -35,7 +35,7 @@ public class Fireball : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (collider.enabled)
+        if (coll.enabled)
         {
             if (ticks == 0)
             {
@@ -51,8 +51,8 @@ public class Fireball : MonoBehaviour
 
     void Explosion()
     {
-        collider.enabled = false;
-        animation.SetTrigger("Explosion");
+        coll.enabled = false;
+        animator.SetTrigger("Explosion");
     }
 
     void DestroyObject()
