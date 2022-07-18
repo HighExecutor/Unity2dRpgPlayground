@@ -16,9 +16,5 @@ public class InputManager : MonoBehaviour
         
     }
     
-    void OnSubmit()
-    {
-        Debug.Log("OnSubmit");
-        DialogueManager.GetInstance().SetNext(true);
-    }
+    
 }

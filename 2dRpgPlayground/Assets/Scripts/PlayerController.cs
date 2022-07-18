@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     public GameObject fireballPrefab;
     private bool interaction = false;
     private MerchantInteraction lastMerchant = null;
+    private PlayerInput playerInput;
 
 
     // Start is called before the first frame update
@@ -47,6 +48,7 @@ public class PlayerController : MonoBehaviour
         healthBar.SetHealth(maxHP);
         expBar.SetMaxExp(needXp);
         expBar.SetExp(0);
+        playerInput = GetComponent<PlayerInput>();
     }
 
     private void FixedUpdate()
@@ -151,6 +153,7 @@ public class PlayerController : MonoBehaviour
         if (lastMerchant != null)
         {
             lastMerchant.OpenDialogue();
+            playerInput.SwitchCurrentActionMap("UI");
         }
     }
 
@@ -249,6 +252,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
+    public void SetInputScheme(string schemeName)
+    {
+        playerInput.SwitchCurrentActionMap(schemeName);
+    }
+
+    void OnSubmit()
+        {
+            Debug.Log("OnSubmit");
+            DialogueManager.GetInstance().SetNext(true);
+        }
 
 }

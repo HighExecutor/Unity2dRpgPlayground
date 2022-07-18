@@ -22,6 +22,7 @@ public class DialogueManager : MonoBehaviour
     
     private static DialogueManager instance;
     private static bool next;
+    [SerializeField] private PlayerController player;
     
     private void Awake() {
     if (instance != null) {
@@ -66,6 +67,7 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
         dialogueIsPlaying = false;
         dialogueText.text = "";
+        player.SetInputScheme("Player");
     }
 
     private void Update()
