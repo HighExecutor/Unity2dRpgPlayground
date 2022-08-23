@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
 using UnityEngine;
+using Random = System.Random;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class EnemyAI : MonoBehaviour
     public float nextWaypointDistance = 0.1f;
     public float detectRadius = 1f;
     public float attackRadius = 0.2f;
+    private float enemyDetectRadius = 2f;
 
     private Path path;
     private int currentWaypoint = 0;
@@ -22,6 +25,7 @@ public class EnemyAI : MonoBehaviour
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private EnemyAttack enemyAttack;
+    private Random random = new Random();
 
 
     // Start is called before the first frame update
@@ -146,7 +150,10 @@ public class EnemyAI : MonoBehaviour
             return false;
         }
 
-        Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+        Vector2 dirToPlayer = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+        Vector2 dirFromPlayer = EvaluateDirFromPlayer();
+        Vector2 dirFromEnemies = EvaluateDirFromEnemies();
+        Vector2 direction = dirToPlayer + dirFromEnemies + dirFromPlayer;
         Vector2 force = direction * speed * Time.deltaTime;
         rb.AddForce(force);
         if (rb.velocity.x > 0)
@@ -163,6 +170,36 @@ public class EnemyAI : MonoBehaviour
         }
         animator.SetBool("IsMoving", true);
         return true;
+    }
+
+    private Vector2 EvaluateDirFromPlayer()
+    {
+        if (!canAttack || random.NextDouble() > 0.9)
+        {
+            return (this.transform.position - playerTransform.position).normalized * 0.2f;
+        }
+        return Vector2.zero;
+    }
+
+    private Vector2 EvaluateDirFromEnemies()
+    {
+        Vector2 result = Vector2.zero;
+        Collider2D[] overlapped = Physics2D.OverlapCircleAll(transform.position, enemyDetectRadius);
+        if (overlapped.Length > 0)
+        {
+            foreach (var col in overlapped)
+            {
+                if (col.tag == "Enemy")
+                {
+                    Enemy curEnemy = col.GetComponent<Enemy>();
+                    if (curEnemy != enemy)
+                    {
+                        result += (Vector2)(transform.position - curEnemy.transform.position).normalized * 0.2f;
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     private bool DetectPlayer()
