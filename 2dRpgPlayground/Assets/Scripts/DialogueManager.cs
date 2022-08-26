@@ -122,10 +122,10 @@ public class DialogueManager : MonoBehaviour
             choices[index].gameObject.SetActive(false);
         }
 
-        StartCoroutine(SelectFirstCHoice());
+        StartCoroutine(SelectFirstChoice());
     }
 
-    private IEnumerator SelectFirstCHoice()
+    private IEnumerator SelectFirstChoice()
     {
         EventSystem.current.SetSelectedGameObject(null);
         yield return new WaitForEndOfFrame();

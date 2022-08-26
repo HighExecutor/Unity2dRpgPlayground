@@ -259,7 +259,6 @@ public class PlayerController : MonoBehaviour
 
     void OnSubmit()
         {
-            Debug.Log("OnSubmit");
             DialogueManager.GetInstance().SetNext(true);
         }
 

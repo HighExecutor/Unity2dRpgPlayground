@@ -174,10 +174,14 @@ public class EnemyAI : MonoBehaviour
 
     private Vector2 EvaluateDirFromPlayer()
     {
-        if (!canAttack || random.NextDouble() > 0.9)
+        if (playerTransform != null)
         {
-            return (this.transform.position - playerTransform.position).normalized * 0.2f;
+            if (!canAttack || random.NextDouble() > 0.9)
+            {
+                return (this.transform.position - playerTransform.position).normalized * 0.2f;
+            }
         }
+
         return Vector2.zero;
     }
 
